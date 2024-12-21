@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Редактирование' if client else 'Добавление' }} клиента{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>{{ 'Редактирование' if client else 'Добавление' }} клиента</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label>Фамилия</label>
+                <input type="text" class="form-control" name="last_name" 
+                       value="{{ client.last_name if client else '' }}" 
+                       required pattern="[А-Яа-яЁё\s-]+" maxlength="50">
+                <small class="form-text text-muted">Только кириллица, пробел и дефис</small>
+            </div>
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" class="form-control" name="first_name" 
+                       value="{{ client.first_name if client else '' }}" 
+                       required pattern="[А-Яа-яЁё\s-]+" maxlength="50">
+                <small class="form-text text-muted">Только кириллица, пробел и дефис</small>
+            </div>
+            <div class="form-group">
+                <label>Отчество</label>
+                <input type="text" class="form-control" name="father_name" 
+                       value="{{ client.father_name if client else '' }}" 
+                       pattern="[А-Яа-яЁё\s-]+" maxlength="50">
+                <small class="form-text text-muted">Только кириллица, пробел и дефис</small>
+            </div>
+            <div class="form-group">
+                <label>Серия паспорта</label>
+                <input type="text" class="form-control" name="passport_seria" 
+                       value="{{ client.passport_seria if client else '' }}" 
+                       required maxlength="4" pattern="\d{4}">
+                <small class="form-text text-muted">4 цифры</small>
+            </div>
+            <div class="form-group">
+                <label>Номер паспорта</label>
+                <input type="text" class="form-control" name="passport_number" 
+                       value="{{ client.passport_number if client else '' }}" 
+                       required maxlength="6" pattern="\d{6}">
+                <small class="form-text text-muted">6 цифр</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{{ url_for('clients_list') }}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %} 

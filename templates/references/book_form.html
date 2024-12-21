@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Редактирование' if book else 'Добавление' }} книги{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>{{ 'Редактирование' if book else 'Добавление' }} книги</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" class="form-control" name="name" 
+                       value="{{ book.name if book else '' }}" 
+                       required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label>Количество</label>
+                <input type="number" class="form-control" name="cnt" 
+                       value="{{ book.cnt if book else '' }}" 
+                       required min="0">
+            </div>
+            <div class="form-group">
+                <label>Тип книги</label>
+                <select class="form-control" name="type_id" required>
+                    <option value="">Выберите тип</option>
+                    {% for type in book_types %}
+                    <option value="{{ type.id }}" 
+                            {% if book and book.type_id == type.id %}selected{% endif %}>
+                        {{ type.type }} ({{ type.day_count }} дней, штраф {{ type.fine }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{{ url_for('books_list') }}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %} 
